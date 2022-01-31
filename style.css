@@ -1,0 +1,54 @@
+* {
+    font-family: 'Roboto';
+}
+.container {
+    max-width: 700px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+#canvas {
+    background: antiquewhite;
+    transform: scale(1, -1);
+}
+.control {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin: 20px 0;
+    align-items: end;
+}
+.control_item{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 15px;
+}
+.control_item input {
+    width: 40px;
+    height: 20px;
+    text-align: center;
+    margin: 10px 0;
+}
+.control_item label {
+    max-width: 150px;
+    text-align: center;
+}
+
+.btn_wrapper {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+.btn_wrapper button{
+    width: 100px;
+    height: 40px;
+    margin: 20px;
+}

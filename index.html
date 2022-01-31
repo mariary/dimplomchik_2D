@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <div class="control">
+        <div class="control_item">
+            <label>D</label>
+            <input id="coef_D" type="number">
+        </div>
+        <div class="control_item">
+            <label>v</label>
+            <input id="coef_v" type="text">
+        </div>
+        <div class="control_item">
+            <label>Номер узла x, где концетрация 1</label>
+            <input id="num_x" type="text">
+        </div>
+        <div class="control_item">
+            <label>Номер узла y, где концетрация 1</label>
+            <input id="num_y" type="text">
+        </div>
+        <div class="control_item">
+            <label>Скорость анимации в мс</label>
+            <input id="coef_t" type="text">
+        </div>
+    </div>
+    <canvas id="canvas"></canvas>
+    <div class="btn_wrapper">
+        <button id="start_btn">start anim</button>
+        <button id="draw_btn">draw all</button>
+    </div>
+</div>
+<script src="index.js"></script>
+</body>
+
+</html>
