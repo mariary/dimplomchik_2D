@@ -45,7 +45,7 @@ function main_equations() {
     let y = [];
     let t = [];
     let anim_speed = 50;
-    let concentration_dot = 15
+    let concentration_dot = nx / 2
     let cell_x = ctxWidth / nx
     let cell_y = ctxHeight / ny
     let ro_x
