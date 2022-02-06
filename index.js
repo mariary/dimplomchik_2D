@@ -48,7 +48,8 @@ function main_equations() {
     let concentration_dot = 15
     let cell_x = ctxWidth / nx
     let cell_y = ctxHeight / ny
-
+    let ro_x
+    let ro_y
     const xScale = ctxWidth / (b1 - a1);
     const yScale = ctxHeight - 50;
     const dx1 = dt / (dx);
@@ -79,6 +80,8 @@ function main_equations() {
                 }
             }
         }
+        ro_x = (Number(coef_v_x_input.value) + Math.abs(Number(coef_v_x_input.value))) / (2 * Math.abs(Number(coef_v_x_input.value)))
+        ro_y = (Number(coef_v_y_input.value) + Math.abs(Number(coef_v_y_input.value))) / (2 * Math.abs(Number(coef_v_y_input.value)))
         UN[0][num_x_input.value][num_y_input.value] = parseInt(coef_m_input.value)
         for (let i = a1; i <= b1;
              i += dx
@@ -99,8 +102,10 @@ function main_equations() {
                     UN[n + 1][i][j] = UN[n][i][j]
                         + coef_D_input.value * dx2 * (UN[n][i + 1][j] - 2 * UN[n][i][j] + UN[n][i - 1][j])
                         + coef_D_input.value * dy2 * (UN[n][i][j + 1] - 2 * UN[n][i][j] + UN[n][i][j - 1])
-                        - coef_v_x_input.value * dx1 * (UN[n][i][j] - UN[n][i - 1][j])
-                        - coef_v_y_input.value * dy1 * (UN[n][i][j] - UN[n][i][j - 1]);
+                        - coef_v_x_input.value * ro_x * dx1 * (UN[n][i][j] - UN[n][i - 1][j])
+                        - coef_v_x_input.value * (1 - ro_x) * dx1 * (UN[n][i + 1][j] - UN[n][i][j])
+                        - coef_v_y_input.value * ro_y * dy1 * (UN[n][i][j] - UN[n][i][j - 1])
+                        - coef_v_y_input.value * (1 - ro_y) * dy1 * (UN[n][i][j + 1] - UN[n][i][j])
                 }
             }
         }
