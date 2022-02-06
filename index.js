@@ -1,6 +1,7 @@
 const canvas = document.getElementById('canvas');
 const count_x_input = document.getElementById('count_x');
 const coef_D_input = document.getElementById('coef_D');
+const coef_m_input = document.getElementById('coef_m');
 const coef_v_x_input = document.getElementById('coef_v_x');
 const coef_v_y_input = document.getElementById('coef_y');
 const coef_t_input = document.getElementById('coef_t');
@@ -32,6 +33,7 @@ function main_equations() {
     let a2 = 0;
     let b2 = 1000;
     let D = 0.01;
+    let m = 10;
     let v_x = 0.01;
     let v_y = 0.01;
     let t0 = 0;
@@ -42,7 +44,7 @@ function main_equations() {
     let x = [];
     let y = [];
     let t = [];
-    let anim_speed = 10;
+    let anim_speed = 50;
     let concentration_dot = 15
     let cell_x = ctxWidth / nx
     let cell_y = ctxHeight / ny
@@ -59,6 +61,7 @@ function main_equations() {
     const add_event_input = (name_input, name) => name_input.value = name
 
     const init_vars = () => {
+        add_event_input(coef_m_input, m);
         add_event_input(coef_D_input, D);
         add_event_input(coef_t_input, anim_speed);
         add_event_input(coef_v_x_input, v_x);
@@ -76,7 +79,7 @@ function main_equations() {
                 }
             }
         }
-        UN[0][num_x_input.value][num_y_input.value] = 1
+        UN[0][num_x_input.value][num_y_input.value] = parseInt(coef_m_input.value)
         for (let i = a1; i <= b1;
              i += dx
         ) {
@@ -101,17 +104,16 @@ function main_equations() {
                 }
             }
         }
-        console.log(UN);
     }
     solve_equation()
     const draw_lines = (n) => {
         for (let j = 0; j < ny; j++) {
             for (let i = 0; i < nx; i++) {
                 ctx.beginPath();
-                ctx.fillStyle = `rgba(55,55,55,${(UN[n][i][j])*80})`;
+                ctx.fillStyle = `rgba(55,55,55,${UN[n][i][j] ? (UN[n][i][j]) * 80 : 0})`;
                 ctx.fillRect(i * cell_x, j * cell_y, cell_x, cell_y);
                 ctx.closePath();
-                UN[n][i][j] !==0 && console.log(UN[n][i][j]);
+                //UN[n][i][j] !== 0 && console.log(UN[n][i][j]);
             }
         }
     }
