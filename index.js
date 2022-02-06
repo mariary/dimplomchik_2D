@@ -1,7 +1,8 @@
 const canvas = document.getElementById('canvas');
 const count_x_input = document.getElementById('count_x');
 const coef_D_input = document.getElementById('coef_D');
-const coef_v_input = document.getElementById('coef_v');
+const coef_v_x_input = document.getElementById('coef_v_x');
+const coef_v_y_input = document.getElementById('coef_y');
 const coef_t_input = document.getElementById('coef_t');
 const num_x_input = document.getElementById('num_x');
 const num_y_input = document.getElementById('num_y');
@@ -31,7 +32,8 @@ function main_equations() {
     let a2 = 0;
     let b2 = 1000;
     let D = 0.01;
-    let v = 0.01;
+    let v_x = 0.01;
+    let v_y = 0.01;
     let t0 = 0;
     let tf = 10000;
     let dx = (b1 - a1) / (nx - 1);
@@ -59,7 +61,8 @@ function main_equations() {
     const init_vars = () => {
         add_event_input(coef_D_input, D);
         add_event_input(coef_t_input, anim_speed);
-        add_event_input(coef_v_input, v);
+        add_event_input(coef_v_x_input, v_x);
+        add_event_input(coef_v_y_input, v_y);
         add_event_input(num_x_input, concentration_dot);
         add_event_input(num_y_input, concentration_dot);
     }
@@ -93,8 +96,8 @@ function main_equations() {
                     UN[n + 1][i][j] = UN[n][i][j]
                         + coef_D_input.value * dx2 * (UN[n][i + 1][j] - 2 * UN[n][i][j] + UN[n][i - 1][j])
                         + coef_D_input.value * dy2 * (UN[n][i][j + 1] - 2 * UN[n][i][j] + UN[n][i][j - 1])
-                        - coef_v_input.value * dx1 * (UN[n][i][j] - UN[n][i - 1][j])
-                        - coef_v_input.value * dy1 * (UN[n][i][j] - UN[n][i][j - 1]);
+                        - coef_v_x_input.value * dx1 * (UN[n][i][j] - UN[n][i - 1][j])
+                        - coef_v_y_input.value * dy1 * (UN[n][i][j] - UN[n][i][j - 1]);
                 }
             }
         }
