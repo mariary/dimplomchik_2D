@@ -153,7 +153,7 @@ function main_equations() {
         for (let j = 0; j < nx_ny; j++) {
             for (let i = 0; i < nx_ny; i++) {
                 ctx.beginPath();
-                ctx.fillStyle = `rgba(55,55,55,${UN[time_moment][i][j] ? (parseFloat(UN[time_moment][i][j]) * s_cell * 100) : 0})`;
+                ctx.fillStyle = `rgba(55,55,55,${UN[time_moment][i][j] ? (parseFloat(UN[time_moment][i][j]) * s_cell * 10) : 0})`;
                 //ctx.fillStyle = `rgba(55,55,55,${UN[time_moment][i][j] ? (parseFloat(UN[time_moment][i][j]) / parseFloat(coef_m_input.value) * s_cell * 10) : 0})`;
                 ctx.fillRect(i * cell_x, j * cell_y, cell_x, cell_y);
                 ctx.closePath();
