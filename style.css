@@ -52,3 +52,13 @@ input::-webkit-inner-spin-button {
     height: 40px;
     margin: 20px;
 }
+
+.wrapper {
+    display: flex;
+}
+.control_const {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-left: 10px;
+}
