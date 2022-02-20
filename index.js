@@ -34,11 +34,11 @@ window.addEventListener("load", main_equations);
 function main_equations() {
     //area and time
     let a1 = 0;
-    let b1 = 100;
+    let b1 = 10;
     let a2 = 0;
     let b2 = 10;
     let t0 = 0;
-    let tf = 1800000;
+    let tf = 259200;
 
     //const
     let T = 23;
@@ -49,8 +49,8 @@ function main_equations() {
 
     //table parameters
     let field_size = b1 - a1
-    let nx_ny = 40;
-    let nt = 50;
+    let nx_ny = 80;
+    let nt = 70;
     let s_cell
     let dx = field_size / nx_ny
     let dy = field_size / nx_ny
@@ -126,8 +126,8 @@ function main_equations() {
                     //> parseFloat(coef_m_input.value) / s_cell - 0.001
                 }
             }
-            square_value.innerText = `${s_cell_pollution * parseFloat(s_cell) * Math.pow(10, -6)} km^2`
-            square_common.innerText = `${s_cell_all_pollution * parseFloat(s_cell) * Math.pow(10, -6)} km^2`
+            square_value.innerText = `${(s_cell_pollution * parseFloat(s_cell) * Math.pow(10, -6)).toFixed(3)} km^2`
+            square_common.innerText = `${(s_cell_all_pollution * parseFloat(s_cell) * Math.pow(10, -6)).toFixed(3)} km^2`
         }
     }
 
@@ -189,6 +189,7 @@ function main_equations() {
         dx = (field_size) / (nx_ny - 1);
         dy = (field_size) / (nx_ny - 1);
         s_cell = ((field_size) / nx_ny) * ((field_size) / nx_ny);
+        console.log(s_cell);
         tf = anim_time.value * 3600
         dt = (tf - t0) / (nt - 1);
         dx1 = dt / (dx);
