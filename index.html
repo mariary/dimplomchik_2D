@@ -7,42 +7,54 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Neonderthaw&family=Roboto:wght@300&display=swap"
+          rel="stylesheet">
 </head>
 <body>
+<div class="main">
+    <video autoplay muted loop class="main_video">
+        <source src="./assets/main3.mp4" type="video/mp4">
+    </video>
+    Modeling of oil spills
+    <button id="scroll_btn">
+        Model
+        <img src="./assets/arrow.svg">
+    </button>
+</div>
 <div class="container">
-    <div class="control">
-        <div class="control_item">
-            <label>Field size (km)</label>
-            <input id="field_size" type="number">
+    <div class="model_wrapper">
+        <div class="control">
+            <div class="control_item">
+                <label>Field size (km)</label>
+                <input id="field_size" type="number">
+            </div>
+            <div class="control_item">
+                <label>Duration of observation (hour)</label>
+                <input id="anim_time" type="number">
+            </div>
+            <div class="control_item">
+                <label>Скорость анимации в мс</label>
+                <input id="coef_t" type="text">
+            </div>
+            <div class="control_item">
+                <label>T (C)</label>
+                <input id="coef_Temp" type="number">
+            </div>
+            <div class="control_item">
+                <label>m (kg)</label>
+                <input id="coef_m" type="number">
+            </div>
+            <div class="control_item">
+                <label>v_x (m/s)</label>
+                <input id="coef_v_x" type="text">
+            </div>
+            <div class="control_item">
+                <label>v_y (m/s)</label>
+                <input id="coef_y" type="text">
+            </div>
         </div>
-        <div class="control_item">
-            <label>Duration of observation (hour)</label>
-            <input id="anim_time" type="number">
-        </div>
-        <div class="control_item">
-            <label>Скорость анимации в мс</label>
-            <input id="coef_t" type="text">
-        </div>
+        <canvas id="canvas"></canvas>
     </div>
-    <div class="control">
-        <div class="control_item">
-            <label>T (C)</label>
-            <input id="coef_Temp" type="number">
-        </div>
-        <div class="control_item">
-            <label>m (kg)</label>
-            <input id="coef_m" type="number">
-        </div>
-        <div class="control_item">
-            <label>v_x (m/s)</label>
-            <input id="coef_v_x" type="text">
-        </div>
-        <div class="control_item">
-            <label>v_y (m/s)</label>
-            <input id="coef_y" type="text">
-        </div>
-    </div>
-    <canvas id="canvas"></canvas>
     <div class="control">
         <div>
             <div>

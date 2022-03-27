@@ -1,45 +1,117 @@
 * {
     font-family: 'Roboto';
 }
+html:focus-within {
+    scroll-behavior: smooth;
+}
+body {
+    margin: 0;
+    overflow-x: hidden;
+    background: #1c1c1c;
+}
 .container {
     max-width: 700px;
     margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
 }
+
+.main {
+    min-height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-size: cover;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 55px;
+    position: relative;
+    color: #fff;
+}
+
+.main_video {
+    height: 100vh;
+    width: 100vw;
+    object-fit: cover;
+    position: absolute;
+    z-index: -1;
+    filter: brightness(0.7);
+}
+
+#scroll_btn {
+    position: absolute;
+    bottom: 15px;
+    background: none;
+    border: none;
+    font-family: 'Bebas Neue', sans-serif;
+    color: #ffffff;
+    font-size: 25px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+#scroll_btn img {
+    width: 15px;
+    transform: rotate(-90deg);
+    margin-left: 5px;
+}
+
+#scroll_btn:hover {
+    opacity: 0.8;
+}
+
+#scroll_btn:hover img {
+    margin-top: 2px;
+}
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     -webkit-appearance: none;
 }
+
 #canvas {
     background: antiquewhite;
     transform: scale(1, -1);
 }
-.control {
+
+.model_wrapper {
     display: flex;
-    width: 100%;
-    justify-content: space-around;
-    margin: 20px 0;
+    justify-content: center;
+    margin: 60px 0;
+    align-items: center;
+}
+
+.control {
+    margin: 20px 50px 20px 0;
     align-items: end;
 }
+
 .control_item{
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: start;
     justify-content: center;
     font-weight: 600;
     font-size: 15px;
+    color: #ffffff;
 }
+
 .control_item input {
-    width: 40px;
-    height: 20px;
-    text-align: center;
+    width: 150px;
+    height: 40px;
     margin: 10px 0;
+    background: #313131;
+    box-shadow: 0 8px 10px 6px rgb(0 0 0 / 12%);
+    border-radius: 8px;
+    border: none;
+    outline: none;
+    color: #e4e4e4;
+    font-size: 17px;
+    padding: 5px 10px;
+    box-sizing: border-box;
 }
+
 .control_item label {
     max-width: 150px;
-    text-align: center;
 }
 
 .btn_wrapper {
@@ -47,6 +119,7 @@ input::-webkit-inner-spin-button {
     /*width: 100%;*/
     justify-content: center;
 }
+
 .btn_wrapper button{
     width: 100px;
     height: 40px;
@@ -56,6 +129,7 @@ input::-webkit-inner-spin-button {
 .wrapper {
     display: flex;
 }
+
 .control_const {
     display: flex;
     flex-direction: column;
