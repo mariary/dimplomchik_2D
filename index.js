@@ -94,6 +94,7 @@ function main_equations() {
         add_event_input(num_x_input, position_of_start_point);
         add_event_input(num_y_input, position_of_start_point);
     }
+
     init_vars()
 
     const handle_change = (name_input, name) => name_input.value = name
@@ -164,6 +165,12 @@ function main_equations() {
         }
     }
 
+    const calculate = (time_step) => {
+        const hours_per_day = 3600;
+        anim_time_info.innerText = `${(parseFloat(time_step) * dt / hours_per_day).toFixed(1)} hr`
+        Number(coef_v_x_input.value) || Number(coef_v_y_input.value) ? solve_equation(time_step) : solve_equation_without_velocity(time_step)
+    }
+
     const draw_field = (time_step) => {
         let max_concentration = find_max_concentration(time_step);
         let cells = find_polluted_cells(time_step);
@@ -217,8 +224,6 @@ function main_equations() {
 
 
     function clearAll() {
-        x = [];
-        t = [];
         for (let i = setTimeout(function () {
         }, 0); i > 0; i--) {
             window.clearInterval(i);
@@ -273,5 +278,6 @@ function main_equations() {
         start_btn.addEventListener('click', initialize)
         //draw_btn.addEventListener('click', () => initialize(draw_all))
     }
+
     add_event_btn()
 }
