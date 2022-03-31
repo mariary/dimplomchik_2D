@@ -11,16 +11,16 @@
           rel="stylesheet">
 </head>
 <body>
-<!--<div class="main">
-    <video autoplay muted loop class="main_video">
+<div class="main">
+    <!--<video autoplay muted loop class="main_video">
         <source src="./assets/main3.mp4" type="video/mp4">
-    </video>
+    </video>-->
     Modeling of oil spills
     <button id="scroll_btn">
         Model
         <img src="./assets/arrow.svg">
     </button>
-</div>-->
+</div>
 <div class="container">
     <div class="model_wrapper">
         <div class="control">
@@ -56,6 +56,10 @@
         <canvas id="canvas"></canvas>
     </div>
     <div class="control">
+        <div class="btn_wrapper">
+            <button id="start_btn">start anim</button>
+            <!--<button id="draw_btn">draw all</button>-->
+        </div>
         <div>
             <div>
                 <br>
@@ -72,11 +76,6 @@
                 Square of ALL pollution (m > 10^(-25)):
                 <span id="square_common"/>
             </div>
-        </div>
-
-        <div class="btn_wrapper">
-            <button id="start_btn">start anim</button>
-            <!--<button id="draw_btn">draw all</button>-->
         </div>
     </div>
 

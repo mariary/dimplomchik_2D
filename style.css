@@ -70,7 +70,7 @@ input::-webkit-inner-spin-button {
 
 #canvas {
     background: antiquewhite;
-    transform: scale(1, -1);
+    /*transform: scale(1, -1);*/
 }
 
 .model_wrapper {

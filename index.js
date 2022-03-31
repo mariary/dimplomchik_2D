@@ -50,11 +50,11 @@ function main_equations() {
     let D
     let m = 1000;
     let v_x = 0.01;
-    let v_y = 0.03;
+    let v_y = 0.5;
 
     //table parameters
     let field_size = x_1 - x_0
-    let number_of_divisions_axis = 40;
+    let number_of_divisions_axis = 60;
     let number_of_time_steps = 70;
     let cell_area
     let dx = field_size / number_of_divisions_axis
@@ -127,6 +127,14 @@ function main_equations() {
                         - coef_v_y_input.value * (1 - ro_y) * dy1 * (UN[time_step][i][j + 1] - UN[time_step][i][j])
                     UN[time_step][i][j] > Math.pow(10, -10) && area_of_pollution++
                     UN[time_step][i][j] > Math.pow(10, -25) && area_of_all_pollution++
+                    if (time_step === 0 && j === position_of_start_point ) {
+                        console.log(UN[time_step][i][j]);
+                        //debugger
+                    }
+                    if (UN[time_step][i][j] < 0) {
+                        console.log(UN[time_step][i][j]);
+                        //sdebugger
+                    }
                     if (coef_v_y_input.value * ro_y * dy1 * (UN[time_step][i][j] - UN[time_step][i][j - 1]) > 0) {
                         // debugger
                         // console.log({
@@ -139,7 +147,7 @@ function main_equations() {
                         //     6:- coef_v_y_input.value * ro_y * dy1 * (UN[time_step][i][j] - UN[time_step][i][j - 1]),
                         //     7: - coef_v_y_input.value * (1 - ro_y) * dy1 * (UN[time_step][i][j + 1] - UN[time_step][i][j])
                         // });
-                        console.log(coef_v_y_input.value * ro_y * dy1 * (UN[time_step][i][j] - UN[time_step][i][j - 1]))
+                        //console.log(coef_v_y_input.value * ro_y * dy1 * (UN[time_step][i][j] - UN[time_step][i][j - 1]))
                     }
 
                     //UN[time_step][i][j] > parseFloat(coef_m_input.value) / cell_area - 0.001 && console.log(UN[time_step][i][j]);
@@ -173,8 +181,6 @@ function main_equations() {
 
     const draw_field = (time_step) => {
         let max_concentration = find_max_concentration(time_step);
-        let cells = find_polluted_cells(time_step);
-        //console.log(cells);
         for (let j = 0; j < number_of_divisions_axis; j++) {
             for (let i = 0; i < number_of_divisions_axis; i++) {
                 ctx.beginPath();
@@ -186,6 +192,31 @@ function main_equations() {
                 ctx.closePath();
             }
         }
+    }
+
+    const draw_field_with_numbers = (time_step) => {
+        let max_concentration = find_max_concentration(time_step);
+        for (let j = 0; j < number_of_divisions_axis; j++) {
+            for (let i = 0; i < number_of_divisions_axis; i++) {
+                ctx.beginPath();
+                let concentration = UN[time_step][i][j] ? parseFloat(UN[time_step][i][j]) : 0;
+                let proportion = concentration / max_concentration;
+                let color = concentration !== 0 ? percentToColor(proportion) : "rgb(0, 0, 255)";
+                ctx.strokeStyle = color;
+                if (UN[time_step][i][j] > 0.05) {
+                    ctx.strokeRect(i * cell_width, j * cell_height, cell_width, cell_height);
+                    console.log(UN[time_step][i][j]);
+                    print_number_in_rectangle(i ,j ,cell_width,cell_height,proportion)
+                }
+                ctx.closePath();
+            }
+        }
+    }
+
+    const print_number_in_rectangle = (x, y, width, height, value) => {
+        ctx.fillStyle = "black";
+        ctx.font = "8px serif";
+        ctx.fillText(value.toFixed(3), x * width, y * height + height / 2)
     }
 
     const find_max_concentration = (time_step) => {
@@ -231,11 +262,22 @@ function main_equations() {
         }
     }
 
+    const clean_matrix_from_negative_values = (time_step) => {
+        for (let i = 0; i < number_of_divisions_axis; i++) {
+            for (let j = 0; j < number_of_divisions_axis; j++) {
+                let value = UN[time_step][i][j];
+                if (value < 0){
+                    UN[time_step][i][j] = Math.abs(UN[time_step][i][j])
+                }
+            }
+        }
+    }
+
     const initialize = () => {
         // calculate vars after change input's values
         field_size = parseFloat(field_size_input.value) * 1000
-        dx = (field_size) / (number_of_divisions_axis - 1);
-        dy = (field_size) / (number_of_divisions_axis - 1);
+        dx = (field_size) / (number_of_divisions_axis);
+        dy = (field_size) / (number_of_divisions_axis);
         cell_area = ((field_size) / number_of_divisions_axis) * ((field_size) / number_of_divisions_axis);
 
         t_finish = anim_time.value * 3600
@@ -245,7 +287,7 @@ function main_equations() {
         dy1 = dt / (dy);
         dy2 = dt / Math.pow(dy, 2);
         D = 4.13 * Math.pow(coef_Temp_input.value, 153 / 100) * 2.78 * Math.pow(10, -11);
-
+        console.log(dx, dx1);
         for (let n = 0; n < number_of_time_steps; n++) {
             for (let j = 0; j < number_of_divisions_axis; j++) {
                 for (let i = 0; i < number_of_divisions_axis; i++) {
@@ -265,11 +307,12 @@ function main_equations() {
         ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
 
         //start draw and put to the draw func n (it's time moment)
-        for (let time_step = 0; time_step < number_of_time_steps; time_step++) {
+        for (let time_step = 0; time_step < number_of_time_steps - 1; time_step++) {
             setTimeout(() => {
                 ctx.clearRect(0, 0, ctxWidth, ctxHeight);
                 calculate(time_step)
                 draw_field(time_step)
+                //draw_field_with_numbers(time_step)
             }, coef_t_input.value * time_step)
         }
     }
