@@ -69,7 +69,7 @@ input::-webkit-inner-spin-button {
 }
 
 #canvas {
-    background: antiquewhite;
+    background: #0035ff;
     /*transform: scale(1, -1);*/
 }
 
