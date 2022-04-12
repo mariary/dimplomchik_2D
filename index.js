@@ -1,4 +1,5 @@
 import Cell from "./cell.js";
+import Mauritius  from "./mauritius.js";
 
 const canvas = document.getElementById('canvas');
 const count_x_input = document.getElementById('count_x');
@@ -12,6 +13,8 @@ const num_x_input = document.getElementById('num_x');
 const num_y_input = document.getElementById('num_y');
 const start_btn = document.getElementById('start_btn');
 const anim_time = document.getElementById('anim_time');
+const scroll_to_element = document.querySelector('.model_title')
+const cord_btn = document.getElementById('coordinates_button');
 
 const btn_scroll = document.getElementById('scroll_btn')
 
@@ -19,15 +22,20 @@ const anim_time_info = document.getElementById("anim_time_info")
 const square_common = document.getElementById("square_common")
 const square_value = document.getElementById("square_value")
 
+const first_value_sidebar = document.getElementById("first_value_sidebar")
+const second_value_sidebar = document.getElementById("second_value_sidebar")
+const third_value_sidebar = document.getElementById("third_value_sidebar")
+const fourth_value_sidebar = document.getElementById("fourth_value_sidebar")
+
 //const draw_btn = document.getElementById('draw_btn');
 const ctx = canvas.getContext('2d')
 
-const ctxWidth = 500;
-const ctxHeight = 500;
+const ctxWidth = 550;
+const ctxHeight = 550;
 
 btn_scroll.addEventListener('click', () => {
     // window.scroll({ top: 100px, behavior: 'smooth' })
-    field_size_input.scrollIntoView({behavior: 'smooth'})
+    scroll_to_element.scrollIntoView({behavior: 'smooth'})
 })
 
 const resize = () => {
@@ -43,28 +51,29 @@ window.addEventListener("load", main_equations);
 function main_equations() {
     //area and time
     let x_0 = 0;
-    let x_1 = 10;
+    let x_1 = 8;
     let t_0 = 0;
-    let t_finish = 2 * 60 * 60;
+    let t_finish = 24 * 60 * 60;
 
     //const
     let T = 23;
     let D
     let m = 1000;
-    let v_x = 0.5;
-    let v_y = 0.5;
+    let v_x = -0.08;
+    let v_y = -0.08;
 
     //table parameters
     let field_size = x_1 - x_0
     let number_of_divisions_axis = 60;
-    let number_of_time_steps = 70;
+    let number_of_time_steps = 140;
     let cell_area
     let dx = field_size / number_of_divisions_axis
     let dy = field_size / number_of_divisions_axis
     let dt = (t_finish - t_0) / (number_of_time_steps - 1);
     let fps = 100;
 
-    let position_of_start_point = number_of_divisions_axis / 4
+    let position_of_start_point_x = 37
+    let position_of_start_point_y = 51
     let cell_width = ctxWidth / number_of_divisions_axis
     let cell_height = ctxHeight / number_of_divisions_axis
 
@@ -93,7 +102,6 @@ function main_equations() {
     }
 
     set_empty_cells()
-    console.log(UN.length, UN[0].length, UN[0][0].length);
     const add_event_input = (name_input, name) => name_input.value = name
 
     const init_vars = () => {
@@ -104,8 +112,8 @@ function main_equations() {
         add_event_input(coef_t_input, fps);
         add_event_input(coef_v_x_input, v_x);
         add_event_input(coef_v_y_input, v_y);
-        add_event_input(num_x_input, position_of_start_point);
-        add_event_input(num_y_input, position_of_start_point);
+        add_event_input(num_x_input, position_of_start_point_x);
+        add_event_input(num_y_input, position_of_start_point_y);
     }
 
     init_vars()
@@ -120,8 +128,8 @@ function main_equations() {
         handle_change(coef_t_input, fps);
         handle_change(coef_v_x_input, v_x);
         handle_change(coef_v_y_input, v_y);
-        handle_change(num_x_input, position_of_start_point);
-        handle_change(num_y_input, position_of_start_point);
+        handle_change(num_x_input, position_of_start_point_x);
+        handle_change(num_y_input, position_of_start_point_y);
     }
 
     const solve_equation = (time_step) => {
@@ -198,11 +206,20 @@ function main_equations() {
         Number(coef_v_x_input.value) || Number(coef_v_y_input.value) ? solve_equation(time_step) : solve_equation_without_velocity(time_step)
     }
 
+    const format_number = (number) => {
+        return number.toExponential(3)
+    }
+
     const draw_field = (time_step) => {
         find_polluted_cells(time_step)
         draw_polluted_cells()
-        console.log(polluted_cells)
         let max_concentration = find_max_concentration(time_step);
+
+        first_value_sidebar.innerText = format_number(max_concentration) + ' kg/m^2'
+        second_value_sidebar.innerText = format_number(max_concentration / 350 * 3) + ' kg/m^2'
+        third_value_sidebar.innerText = format_number(max_concentration / 350 * 2) + ' kg/m^2'
+        fourth_value_sidebar.innerText = format_number(max_concentration / 350) + ' kg/m^2'
+
         for (let j = 0; j < number_of_divisions_axis; j++) {
             for (let i = 0; i < number_of_divisions_axis; i++) {
                 ctx.beginPath();
@@ -212,7 +229,7 @@ function main_equations() {
                 let color = proportion > 0.05  ? percentToColor(proportion) : "rgba(0, 0, 255,0)";
 
                 if (UN[time_step][i][j].is_earth){
-                    color = "white"
+                    color = "transparent"
                 }
 
                 ctx.fillStyle = color;
@@ -296,10 +313,42 @@ function main_equations() {
         }
     }
 
+    let coordinates = []
+    const choose_cells_coordinate = () => {
+        canvas.addEventListener('click', (e) => {
+            const canvas_position = canvas.getBoundingClientRect();
+            let x = e.clientX - canvas_position.left
+            let y = e.clientY- canvas_position.top
+
+            let x_cord = (x / cell_width).toFixed(0)
+            let y_cord = (y / cell_height).toFixed(0)
+
+            coordinates.push({
+                x: x_cord,
+                y: y_cord
+            })
+            ctx.beginPath();
+            ctx.fillStyle = 'transparent';
+            ctx.fillRect(x_cord * cell_width, y_cord * cell_height, cell_width, cell_height);
+        })
+
+    }
+    choose_cells_coordinate()
+
+    const draw_earth = (list) => {
+        list.map(item => {
+            ctx.beginPath();
+            ctx.fillStyle = 'transparents';
+            ctx.fillRect(item.x * cell_width, item.y * cell_height, cell_width, cell_height);
+        })
+    }
+
+    //draw_earth(Mauritius)
+
     const set_earth = (list) => {
         for (let n = 0; n < number_of_time_steps; n++) {
             for (let index = 0; index < list.length; index++){
-                UN[n][list[index].x][list[index].y].is_earth = true;
+                UN[n][Number(list[index].x)][Number(list[index].y)].is_earth = true;
             }
         }
     }
@@ -332,36 +381,7 @@ function main_equations() {
         //set initial conditional
 
         UN[0][num_x_input.value][num_y_input.value].value = parseFloat(coef_m_input.value) / cell_area
-        set_earth([
-            {x: 15, y: 20},
-            {x: 16, y: 20},
-            {x: 17, y: 20},
-            {x: 18, y: 20},
-            {x: 19, y: 20},
-            {x: 20, y: 20},
-            {x: 21, y: 20},
-            {x: 22, y: 20},
-            {x: 23, y: 20},
-            {x: 24, y: 20},
-            {x: 25, y: 20},
-            {x: 26, y: 20},
-            {x: 27, y: 20},
-            {x: 28, y: 20},
-            {x: 14, y: 20},
-            {x: 13, y: 20},
-            {x: 12, y: 20},
-            {x: 11, y: 20},
-            {x: 10, y: 20},
-            {x: 9, y: 20},
-            {x: 8, y: 20},
-            {x: 7, y: 20},
-            {x: 6, y: 20},
-            {x: 5, y: 20},
-            {x: 4, y: 20},
-            {x: 3, y: 20},
-            {x: 2, y: 20},
-            {x: 1, y: 20},
-        ])
+        set_earth(Mauritius)
         clearAll()
 
         ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
@@ -379,7 +399,10 @@ function main_equations() {
 
     const add_event_btn = () => {
         start_btn.addEventListener('click', initialize)
+        //cord_btn.addEventListener('click', () => console.log(JSON.stringify(coordinates)))
     }
 
     add_event_btn()
 }
+
+

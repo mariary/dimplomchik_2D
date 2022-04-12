@@ -12,9 +12,9 @@
 </head>
 <body>
 <div class="main">
-    <!--<video autoplay muted loop class="main_video">
+    <video autoplay muted loop class="main_video">
         <source src="./assets/main3.mp4" type="video/mp4">
-    </video>-->
+    </video>
     Modeling of oil spills
     <button id="scroll_btn">
         Model
@@ -22,6 +22,7 @@
     </button>
 </div>
 <div class="container">
+    <div class="model_title">Mauritius oil spill</div>
     <div class="model_wrapper">
         <div class="control">
             <div class="control_item">
@@ -33,7 +34,7 @@
                 <input id="anim_time" type="number">
             </div>
             <div class="control_item">
-                <label>Скорость анимации в мс</label>
+                <label>fps</label>
                 <input id="coef_t" type="text">
             </div>
             <div class="control_item">
@@ -52,33 +53,41 @@
                 <label>v_y (m/s)</label>
                 <input id="coef_y" type="text">
             </div>
+            <!--<button id="coordinates_button">coordinates</button>-->
         </div>
         <canvas id="canvas"></canvas>
+        <div class="sidebar">
+            <div id="sidebar"></div>
+            <div class="info">
+                <div id="first_value_sidebar"></div>
+                <div id="second_value_sidebar"></div>
+                <div id="third_value_sidebar"></div>
+                <div id="fourth_value_sidebar"></div>
+                <div>0 kg/m^2</div>
+            </div>
+        </div>
     </div>
-    <div class="control">
-        <div class="btn_wrapper">
-            <button id="start_btn">start anim</button>
-            <!--<button id="draw_btn">draw all</button>-->
+    <div class="btn_wrapper">
+        <button id="start_btn">start anim</button>
+        <!--<button id="draw_btn">draw all</button>-->
+    </div>
+    <div class="result_wrapper">
+        <div>
+            <br>
+            Time:
+            <span id="anim_time_info"/>
         </div>
         <div>
-            <div>
-                <br>
-                Time:
-                <span id="anim_time_info"/>
-            </div>
-            <div>
-                <br>
-                Square of pollution (m > 10^(-10)):
-                <span id="square_value"/>
-            </div>
-            <div>
-                <br>
-                Square of ALL pollution (m > 10^(-25)):
-                <span id="square_common"/>
-            </div>
+            <br>
+            Square of pollution (m > 10^(-10)):
+            <span id="square_value"/>
+        </div>
+        <div>
+            <br>
+            Square of ALL pollution (m > 10^(-25)):
+            <span id="square_common"/>
         </div>
     </div>
-
     <div class="control" style="display: none">
         <div class="control_item">
             <label>Номер узла x, где концетрация 1</label>
@@ -91,6 +100,7 @@
     </div>
 </div>
 <script type="module" src="cell.js"></script>
+<script type="module" src="mauritius.js"></script>
 <script type="module" src="index.js"></script>
 </body>
 
