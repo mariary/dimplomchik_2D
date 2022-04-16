@@ -292,10 +292,45 @@ function main_equations() {
     const draw_polluted_cells = () => {
         for (let i = 0; i < polluted_cells.length; i++){
             let cell = polluted_cells[i];
+
+            draw_border(polluted_cells,cell)
+
+            draw_color(cell,"rgba(26,36,73,0.1)",'fill')
+        }
+    }
+
+    const draw_color = (cell, color, mode) => {
+        ctx.beginPath();
+        ctx.fillStyle = color;
+
+        if (mode === 'fill') {
+            ctx.fillRect(cell.x * cell_width, cell.y * cell_height, cell_width, cell_height)
+        }
+        else {
             ctx.beginPath();
-            ctx.fillStyle = "rgba(26,36,73,0.1)";
-            ctx.fillRect(cell.x * cell_width, cell.y * cell_height, cell_width, cell_height);
-            ctx.closePath();
+            ctx.moveTo(cell.x * cell_width, cell.y * cell_height)
+            ctx.lineTo(cell.x * cell_width + cell_width, cell.y * cell_height + cell_height)
+            ctx.strokeStyle = color
+            ctx.stroke();
+        }
+
+        ctx.closePath();
+    }
+
+    const draw_border = (polluted_cells, cell) => {
+
+        let x = cell.x;
+        let y = cell.y;
+
+
+        if (!polluted_cells.some(c => c.x === x + 1 && c.y === y)){
+            draw_color(cell, 'red','stroke' )
+        } else if (!polluted_cells.some(c => c.x === x - 1 && c.y === y)) {
+            draw_color(cell, 'red','stroke' )
+        } else if (!polluted_cells.some(c => c.x === x  && c.y === y + 1)) {
+            draw_color(cell, 'red','stroke' )
+        } else if (!polluted_cells.some(c => c.x === x  && c.y === y - 1)) {
+            draw_color(cell, 'red','stroke' )
         }
     }
 

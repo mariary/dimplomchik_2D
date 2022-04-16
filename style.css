@@ -102,7 +102,7 @@ input::-webkit-inner-spin-button {
     align-items: start;
     justify-content: space-between;
     flex-direction: column;
-    min-width: 110px;
+    min-width: 130px;
 }
 
 .model_wrapper {
